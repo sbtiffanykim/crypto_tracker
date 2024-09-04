@@ -1,6 +1,8 @@
 import { Outlet } from 'react-router-dom';
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
+import { Helmet } from 'react-helmet';
+import { MdDarkMode } from 'react-icons/md';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -18,11 +20,27 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const Aside = styled.aside`
+  width: 15vw;
+  height: 100vh;
+  float: left;
+  background-color: #2f3640;
+`;
+
+const ThemeButton = styled.button``;
+
 function App() {
   return (
     <>
+      <Helmet>
+        <title>Crypto Tracker</title>
+      </Helmet>
       <GlobalStyle />
-      <aside></aside>
+      <Aside>
+        <ThemeButton>
+          <MdDarkMode />
+        </ThemeButton>
+      </Aside>
       <Outlet />
     </>
   );
