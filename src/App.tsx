@@ -1,10 +1,12 @@
-function App() {
+import { Outlet, useParams } from 'react-router-dom';
 
+function App() {
   return (
     <>
-      <h1>app</h1>
+      <aside></aside>
+      <Outlet />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
