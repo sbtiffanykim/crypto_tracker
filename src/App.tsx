@@ -24,7 +24,7 @@ const Aside = styled.aside`
   width: 15vw;
   height: 100vh;
   float: left;
-  background-color: #2f3640;
+  background-color: #20283a;
 `;
 
 const ThemeButton = styled.button``;
