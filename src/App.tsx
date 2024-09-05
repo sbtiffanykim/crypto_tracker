@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import reset from 'styled-reset';
 import { Helmet } from 'react-helmet';
 import { MdDarkMode } from 'react-icons/md';
@@ -38,6 +38,10 @@ const Container = styled.div`
 `;
 
 const ThemeButton = styled.button``;
+
+const theme = {
+  spacing: (value: number) => `${value}px`,
+};
 
 function App() {
   return (

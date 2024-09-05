@@ -35,8 +35,6 @@ export default function CoinList() {
     queryKey: ['allCoins'],
   });
 
-  console.log(data);
-
   return (
     <>
       {isLoading ? (
