@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import CoinCard from '../Components/CoinCard';
+import CoinCard from '../components/CoinCard';
 
 const Title = styled.h1`
   color: ${(props) => props.theme.accentColor};
@@ -16,7 +16,16 @@ const Header = styled.header`
   align-items: center;
 `;
 
-const List = styled.ul``;
+const ListTitle = styled.div`
+  font-weight: 600;
+  padding: 20px;
+`;
+
+const List = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+`;
 
 const coins = [
   {
@@ -116,6 +125,7 @@ export default function CoinList() {
         <Header>
           <Title>Coin List</Title>
         </Header>
+        <ListTitle>Market Trend</ListTitle>
         <List>
           {coins.map((coin) => (
             <CoinCard key={coin.id} {...coin} />
