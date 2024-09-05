@@ -20,11 +20,21 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const Layout = styled.div`
+  display: grid;
+  grid-template-columns: 15vw 1fr;
+`;
+
 const Aside = styled.aside`
   width: 15vw;
-  height: 100vh;
-  float: left;
-  background-color: #20283a;
+  min-height: 100vh;
+  background-color: ${(props) => props.theme.asideColor};
+  margin-right: 15px;
+`;
+
+const Container = styled.div`
+  padding: 10px 20px;
+  background-color: ${(props) => props.theme.bgColor};
 `;
 
 const ThemeButton = styled.button``;
@@ -36,12 +46,16 @@ function App() {
         <title>Crypto Tracker</title>
       </Helmet>
       <GlobalStyle />
-      <Aside>
-        <ThemeButton>
-          <MdDarkMode />
-        </ThemeButton>
-      </Aside>
-      <Outlet />
+      <Layout>
+        <Aside>
+          <ThemeButton>
+            <MdDarkMode />
+          </ThemeButton>
+        </Aside>
+        <Container>
+          <Outlet />
+        </Container>
+      </Layout>
     </>
   );
 }
