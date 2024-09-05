@@ -72,7 +72,7 @@ interface ITextprops {
   value?: number;
 }
 
-const Text = styled.text<ITextprops>`
+const Text = styled.p<ITextprops>`
   font-weight: ${(props) => props.fontWeight || 'normal'};
   font-size: ${(props) => props.fontSize || '15px'};
   color: ${(props) => {
