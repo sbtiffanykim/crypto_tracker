@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-interface ICoin {
+export interface ICoin {
   id: string;
   symbol: string;
   name: string;
