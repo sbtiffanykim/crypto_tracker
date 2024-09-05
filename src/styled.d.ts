@@ -7,5 +7,7 @@ declare module 'styled-components' {
     accentColor: string;
     cardBgColor: string;
     cardHoverBgColor: string;
+    priceUpColor: string;
+    priceDownColor: string;
   }
 }
