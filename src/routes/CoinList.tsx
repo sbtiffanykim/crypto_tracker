@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import CoinCard, { ICoin } from '../components/CoinCard';
 import { fetchCoins } from '../api';
+import Loader from '../Loader';
 
 const Title = styled.h1`
   color: ${(props) => props.theme.accentColor};
@@ -34,6 +35,14 @@ const List = styled.ul`
   padding: 0px 5px;
 `;
 
+const LoaderContainer = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) => props.theme.bgColor};
+`;
+
 export default function CoinList() {
   const { data, isLoading } = useQuery({
     queryFn: fetchCoins,
@@ -43,7 +52,9 @@ export default function CoinList() {
   return (
     <>
       {isLoading ? (
-        <Title>Loading...</Title>
+        <LoaderContainer>
+          <Loader />
+        </LoaderContainer>
       ) : (
         <Container>
           <Helmet>

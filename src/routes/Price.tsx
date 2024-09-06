@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { IPriceData, IPriceInfo } from '../types';
 import { fetchCoinHistory } from '../api';
+import Loader from '../Loader';
 
 const ItemList = styled.div`
   display: flex;
@@ -62,11 +63,21 @@ export default function Price() {
     queryFn: fetchCoinHistory,
     queryKey: ['coinPrice', coinId],
   });
+  const LoaderContainer = styled.div`
+    height: 400;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: inherit;
+  `;
 
   return (
     <>
       {isLoading ? (
-        'Loading...'
+        <LoaderContainer>
+          <Loader />
+        </LoaderContainer>
       ) : (
         <ItemList>
           <Title>

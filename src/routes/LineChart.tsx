@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import ApexChart from 'react-apexcharts';
 import { useQuery } from '@tanstack/react-query';
@@ -5,6 +6,7 @@ import { useRecoilValue } from 'recoil';
 import { IPriceData, IPriceInfo } from '../types';
 import { fetchCoinHistory } from '../api';
 import { isDarkAtom } from '../atoms';
+import Loader from '../Loader';
 
 export default function Chart() {
   const { coinId } = useParams();
@@ -14,11 +16,21 @@ export default function Chart() {
   });
 
   const isDark = useRecoilValue(isDarkAtom);
+  const LoaderContainer = styled.div`
+    height: 400;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: inherit;
+  `;
 
   return (
     <>
       {isLoading ? (
-        'Loading'
+        <LoaderContainer>
+          <Loader />
+        </LoaderContainer>
       ) : (
         <ApexChart
           type='line'

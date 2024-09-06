@@ -7,6 +7,7 @@ import { MdCandlestickChart, MdStackedLineChart } from 'react-icons/md';
 import { Helmet } from 'react-helmet-async';
 import { fetchCoinDetail } from '../api';
 import { ICoinDetail } from '../types';
+import Loader from '../Loader';
 
 const Container = styled.div`
   padding: 10px 20px;
@@ -204,6 +205,14 @@ const Tab = styled.div<{ isactive: string }>`
   }
 `;
 
+const LoaderContainer = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) => props.theme.bgColor};
+`;
+
 export default function CoinDetail() {
   const { coinId } = useParams();
   const { data, isLoading } = useQuery<ICoinDetail>({
@@ -223,7 +232,9 @@ export default function CoinDetail() {
   return (
     <>
       {isLoading && !data ? (
-        'Loading...'
+        <LoaderContainer>
+          <Loader />
+        </LoaderContainer>
       ) : (
         <Container>
           <Helmet>
