@@ -1,9 +1,12 @@
 import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Outlet, useMatch, useParams } from 'react-router-dom';
 import { IoMdHome, IoMdTrendingDown, IoMdTrendingUp } from 'react-icons/io';
 import { fetchCoinDetail } from '../api';
 import { theme } from '../theme';
+import { FaChartBar, FaCoins } from 'react-icons/fa';
+import { LuCandlestickChart } from 'react-icons/lu';
+import { MdBarChart, MdCandlestickChart, MdStackedLineChart } from 'react-icons/md';
 
 interface ICoinDetail {
   id: string;
@@ -203,6 +206,40 @@ const Description = styled.p`
   font-size: 14px;
   a {
     text-decoration: underline;
+  }
+`;
+
+const ChartTabs = styled(HStack)`
+  justify-content: space-between;
+  font-size: 20px;
+`;
+
+const TabList = styled.div`
+  background-color: ${(props) => props.theme.cardBgColor};
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-radius: 5px;
+  padding: 10px;
+  gap: 10px;
+`;
+
+const Tab = styled.div<{ isactive: boolean }>`
+  background-color: ${(props) =>
+    props.isactive ? props.theme.cardHoverBgColor : props.theme.cardBgColor};
+  border-radius: 5px;
+  padding: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
   }
 `;
 
@@ -4992,6 +5029,10 @@ export default function CoinDetail() {
   //   queryKey: ['coin', coinId],
   // });
 
+  const onPriceTab = useMatch('/:coinId/price');
+  const onStickChartTab = useMatch('/:coinId/stick-chart');
+  const onLineChartTab = useMatch('/:coinId/line-chart');
+
   console.log(data);
 
   const change = parseFloat(data?.market_data.price_change_percentage_24h.toFixed(2));
@@ -5067,7 +5108,26 @@ export default function CoinDetail() {
         {/* price and charts */}
         <Content>
           {/* menu select */}
-          <HStack></HStack>
+          <ChartTabs>
+            <TabList>
+              <Tab isactive={onLineChartTab !== null}>
+                <Link to={`/${coinId}/line-chart`}>
+                  <MdStackedLineChart />
+                </Link>
+              </Tab>
+              <Tab isactive={onStickChartTab !== null}>
+                <Link to={`/${coinId}/stick-chart`}>
+                  <MdCandlestickChart />
+                </Link>
+              </Tab>
+              <Tab isactive={onPriceTab !== null}>
+                <Link to={`/${coinId}/price`}>
+                  <FaCoins />
+                </Link>
+              </Tab>
+            </TabList>
+          </ChartTabs>
+          <Outlet />
         </Content>
 
         {/* description */}

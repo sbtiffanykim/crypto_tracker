@@ -14,3 +14,9 @@ export function fetchCoinDetail({ queryKey }: QueryFunctionContext) {
     response.json()
   );
 }
+
+export function fetchCoinHistory(coinId: string | undefined) {
+  return fetch(`${BASE_URL}/${coinId}/ohlc?vs_currency=usd&days=${days}`).then(
+    (response) => response.json()
+  );
+}
