@@ -7,6 +7,7 @@ import { theme } from '../theme';
 import { FaCoins } from 'react-icons/fa';
 import { MdCandlestickChart, MdStackedLineChart } from 'react-icons/md';
 import { ICoinDetail } from '../types';
+import { Helmet } from 'react-helmet-async';
 
 const Container = styled.div`
   padding: 10px 20px;
@@ -231,6 +232,10 @@ export default function CoinDetail() {
         'Loading...'
       ) : (
         <Container>
+          <Helmet>
+            <title>{data?.name}</title>
+            <link rel='icon' type='image/png' href={data?.image.thumb} sizes='16x16' />
+          </Helmet>
           <Header>
             <Link to={'/'}>
               <HomeButton>

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
-import CoinCard, { ICoin } from '../components/CoinCard';
 import { useQuery } from '@tanstack/react-query';
+import { Helmet } from 'react-helmet-async';
+import { RiCoinsFill } from 'react-icons/ri';
+import CoinCard, { ICoin } from '../components/CoinCard';
 import { fetchCoins } from '../api';
 
 const Title = styled.h1`
@@ -41,6 +43,10 @@ export default function CoinList() {
         <Title>Loading...</Title>
       ) : (
         <Container>
+          <Helmet>
+            <title>Crypto Tracker</title>
+            <link rel='icon' type='image/svg+xml' href='/coins-money.svg' sizes='16x16' />
+          </Helmet>
           <Header>
             <Title>Coin List</Title>
           </Header>

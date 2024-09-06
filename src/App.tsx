@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router-dom';
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import reset from 'styled-reset';
-import { Helmet } from 'react-helmet';
 import { MdDarkMode } from 'react-icons/md';
+import { HelmetProvider } from 'react-helmet-async';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -54,15 +54,14 @@ const theme = {};
 function App() {
   return (
     <>
-      <Helmet>
-        <title>Crypto Tracker</title>
-      </Helmet>
       <GlobalStyle />
       <Container>
         <ThemeButton>
           <MdDarkMode />
         </ThemeButton>
-        <Outlet />
+        <HelmetProvider>
+          <Outlet />
+        </HelmetProvider>
       </Container>
     </>
   );
