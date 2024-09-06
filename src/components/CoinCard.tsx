@@ -93,7 +93,7 @@ export default function CoinCard({ ...coin }: ICoin) {
         </CardTitle>
         <CardContent>
           <Text fontWeight={600} fontSize={'20px'}>
-            $ {coin.current_price}
+            $ {coin.current_price.toLocaleString()}
           </Text>
           <Text value={coin.price_change_percentage_24h}>
             {coin.price_change_percentage_24h.toFixed(2)}%

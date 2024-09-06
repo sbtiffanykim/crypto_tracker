@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
 import { Link, Outlet, useMatch, useParams } from 'react-router-dom';
-import { IoMdHome, IoMdTrendingDown, IoMdTrendingUp } from 'react-icons/io';
+import { IoMdHome } from 'react-icons/io';
 import { fetchCoinDetail } from '../api';
 import { theme } from '../theme';
 import { FaCoins } from 'react-icons/fa';
@@ -65,7 +65,9 @@ const Badge = styled.p`
   font-weight: 600;
   display: inline-block;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  font-size: 12px;
+  color: ${(props) => props.theme.accentColor};
 `;
 
 const HStack = styled.div<IStackProps>`
@@ -167,8 +169,8 @@ const Card = styled.div`
 `;
 
 const Description = styled.p`
-  margin-top: 15px;
-  line-height: 17px;
+  margin-top: 25px;
+  line-height: 20px;
   font-size: 14px;
   a {
     text-decoration: underline;
@@ -223,8 +225,7 @@ export default function CoinDetail() {
   const change = parseFloat(
     (data?.market_data.price_change_percentage_24h ?? 0).toFixed(2)
   );
-  const formattedChange = change > 0 ? `+ ${change}` : change;
-  const ChangeIcon = change > 0 ? <IoMdTrendingUp /> : <IoMdTrendingDown />;
+  const formattedChange = change > 0 ? `+ ${change}` : `${change}`;
 
   return (
     <>
@@ -256,7 +257,7 @@ export default function CoinDetail() {
 
                 <VStack gap='10px' mt='20px'>
                   <Text fontWeight={600} fontSize='20px'>
-                    $ {data?.market_data.current_price.usd}
+                    $ {data?.market_data.current_price.usd.toLocaleString()}
                   </Text>
                   <Text fontWeight={600} fontSize='16px' value={change}>
                     {formattedChange}%
@@ -268,31 +269,31 @@ export default function CoinDetail() {
                 <Card>
                   <CardVStack>
                     <Label>High</Label>
-                    <Text>$ {data?.market_data.high_24h.usd}</Text>
+                    <Text>$ {data?.market_data.high_24h.usd.toLocaleString()}</Text>
                   </CardVStack>
                   <CardVStack mt='20px'>
                     <Label>Low</Label>
-                    <Text>$ {data?.market_data.low_24h.usd}</Text>
+                    <Text>$ {data?.market_data.low_24h.usd.toLocaleString()}</Text>
                   </CardVStack>
                 </Card>
                 <Card>
                   <CardVStack>
                     <Label>Max Supply</Label>
-                    <Text>{data?.market_data.max_supply}</Text>
+                    <Text>{data?.market_data.max_supply.toLocaleString()}</Text>
                   </CardVStack>
                   <CardVStack mt='20px'>
                     <Label>Total Supply</Label>
-                    <Text>{data?.market_data.total_supply}</Text>
+                    <Text>{data?.market_data.total_supply.toLocaleString()}</Text>
                   </CardVStack>
                 </Card>
                 <Card>
                   <CardVStack>
                     <Label>Market Cap</Label>
-                    <Text>{data?.market_data.market_cap.usd}</Text>
+                    <Text>{data?.market_data.market_cap.usd.toLocaleString()}</Text>
                   </CardVStack>
                   <CardVStack mt='20px'>
                     <Label>Total Volume</Label>
-                    <Text>{data?.market_data.total_volume.usd}</Text>
+                    <Text>{data?.market_data.total_volume.usd.toLocaleString()}</Text>
                   </CardVStack>
                 </Card>
               </CardList>
@@ -326,7 +327,9 @@ export default function CoinDetail() {
 
           {/* description */}
           <Content>
-            <Text fontWeight={600}>About {data?.name}</Text>
+            <Text fontWeight={600} fontSize='20px'>
+              About {data?.name}
+            </Text>
             <Description
               dangerouslySetInnerHTML={{
                 __html: data?.description.en ?? 'Description not available.',
