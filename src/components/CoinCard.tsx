@@ -77,12 +77,16 @@ const Text = styled.p<ITextprops>`
   font-size: ${(props) => props.fontSize || '15px'};
   color: ${(props) => {
     if (props.value && props.value > 0) return props.theme.priceUpColor;
+    if (props.value && props.value === 0) return props.theme.textColor;
     if (props.value && props.value < 0) return props.theme.priceDownColor;
     return props.theme.textColor;
   }};
 `;
 
 export default function CoinCard({ ...coin }: ICoin) {
+  const change = parseFloat((coin.price_change_percentage_24h ?? 0).toFixed(2));
+  const formattedChange = change > 0 ? `+ ${change}` : `${change}`;
+
   return (
     <Link to={`/${coin.id}`}>
       <Card>
@@ -95,9 +99,7 @@ export default function CoinCard({ ...coin }: ICoin) {
           <Text fontWeight={600} fontSize={'20px'}>
             $ {coin.current_price.toLocaleString()}
           </Text>
-          <Text value={coin.price_change_percentage_24h}>
-            {coin.price_change_percentage_24h.toFixed(2)}%
-          </Text>
+          <Text value={change}>{formattedChange}%</Text>
         </CardContent>
       </Card>
     </Link>

@@ -1,8 +1,10 @@
 import { useParams } from 'react-router-dom';
 import ApexChart from 'react-apexcharts';
 import { useQuery } from '@tanstack/react-query';
+import { useRecoilValue } from 'recoil';
 import { IPriceData, IPriceInfo } from '../types';
 import { fetchCoinHistory } from '../api';
+import { isDarkAtom } from '../atoms';
 
 export default function Chart() {
   const { coinId } = useParams();
@@ -10,6 +12,8 @@ export default function Chart() {
     queryFn: fetchCoinHistory,
     queryKey: ['coinPrice', coinId],
   });
+
+  const isDark = useRecoilValue(isDarkAtom);
 
   return (
     <>
@@ -30,7 +34,7 @@ export default function Chart() {
           ]}
           options={{
             theme: {
-              mode: 'dark',
+              mode: isDark ? 'dark' : 'light',
             },
             chart: {
               height: 300,

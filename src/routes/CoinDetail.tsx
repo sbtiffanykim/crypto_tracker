@@ -2,12 +2,11 @@ import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
 import { Link, Outlet, useMatch, useParams } from 'react-router-dom';
 import { IoMdHome } from 'react-icons/io';
-import { fetchCoinDetail } from '../api';
-import { theme } from '../theme';
 import { FaCoins } from 'react-icons/fa';
 import { MdCandlestickChart, MdStackedLineChart } from 'react-icons/md';
-import { ICoinDetail } from '../types';
 import { Helmet } from 'react-helmet-async';
+import { fetchCoinDetail } from '../api';
+import { ICoinDetail } from '../types';
 
 const Container = styled.div`
   padding: 10px 20px;
@@ -20,7 +19,7 @@ const Header = styled.header`
 `;
 
 const HomeButton = styled.div`
-  background-color: ${(props) => props.theme.cardBgColor};
+  background-color: ${(props) => props.theme.cardHoverBgColor};
   border-radius: 50%;
   padding: 10px;
   width: 40px;
@@ -29,8 +28,9 @@ const HomeButton = styled.div`
   justify-content: center;
   align-items: center;
   transition: background-color 0.2s ease;
+  color: ${(props) => props.theme.textColor};
   &:hover {
-    background-color: ${(props) => props.theme.cardHoverBgColor};
+    background-color: ${(props) => props.theme.accentColor};
   }
 `;
 
@@ -135,17 +135,10 @@ const Text = styled.p<ITextProps>`
   font-size: ${(props) => props.fontSize || '15px'};
   color: ${(props) => {
     if (props.value && props.value > 0) return props.theme.priceUpColor;
+    if (props.value && props.value === 0) return props.theme.textColor;
     if (props.value && props.value < 0) return props.theme.priceDownColor;
     return props.theme.textColor;
   }};
-`;
-
-interface IColoredTextProps extends ITextProps {
-  color: string;
-}
-
-const ColoredText = styled(Text)<IColoredTextProps>`
-  color: ${(props) => props.color};
 `;
 
 const Img = styled.img`
@@ -191,7 +184,7 @@ const TabList = styled.div`
   gap: 10px;
 `;
 
-const Tab = styled.div<{ isactive: boolean }>`
+const Tab = styled.div<{ isactive: string }>`
   background-color: ${(props) =>
     props.isactive ? props.theme.cardHoverBgColor : props.theme.cardBgColor};
   border-radius: 5px;
@@ -229,7 +222,7 @@ export default function CoinDetail() {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading && !data ? (
         'Loading...'
       ) : (
         <Container>
@@ -257,7 +250,7 @@ export default function CoinDetail() {
 
                 <VStack gap='10px' mt='20px'>
                   <Text fontWeight={600} fontSize='20px'>
-                    $ {data?.market_data.current_price.usd.toLocaleString()}
+                    $ {data?.market_data.current_price.usd?.toLocaleString()}
                   </Text>
                   <Text fontWeight={600} fontSize='16px' value={change}>
                     {formattedChange}%
@@ -269,31 +262,31 @@ export default function CoinDetail() {
                 <Card>
                   <CardVStack>
                     <Label>High</Label>
-                    <Text>$ {data?.market_data.high_24h.usd.toLocaleString()}</Text>
+                    <Text>$ {data?.market_data.high_24h.usd?.toLocaleString()}</Text>
                   </CardVStack>
                   <CardVStack mt='20px'>
                     <Label>Low</Label>
-                    <Text>$ {data?.market_data.low_24h.usd.toLocaleString()}</Text>
+                    <Text>$ {data?.market_data.low_24h.usd?.toLocaleString()}</Text>
                   </CardVStack>
                 </Card>
                 <Card>
                   <CardVStack>
                     <Label>Max Supply</Label>
-                    <Text>{data?.market_data.max_supply.toLocaleString()}</Text>
+                    <Text>{data?.market_data.max_supply?.toLocaleString()}</Text>
                   </CardVStack>
                   <CardVStack mt='20px'>
                     <Label>Total Supply</Label>
-                    <Text>{data?.market_data.total_supply.toLocaleString()}</Text>
+                    <Text>{data?.market_data.total_supply?.toLocaleString()}</Text>
                   </CardVStack>
                 </Card>
                 <Card>
                   <CardVStack>
                     <Label>Market Cap</Label>
-                    <Text>{data?.market_data.market_cap.usd.toLocaleString()}</Text>
+                    <Text>{data?.market_data.market_cap.usd?.toLocaleString()}</Text>
                   </CardVStack>
                   <CardVStack mt='20px'>
                     <Label>Total Volume</Label>
-                    <Text>{data?.market_data.total_volume.usd.toLocaleString()}</Text>
+                    <Text>{data?.market_data.total_volume.usd?.toLocaleString()}</Text>
                   </CardVStack>
                 </Card>
               </CardList>
@@ -305,17 +298,17 @@ export default function CoinDetail() {
             {/* menu select */}
             <ChartTabs>
               <TabList>
-                <Tab isactive={onLineChartTab !== null}>
+                <Tab isactive={(onLineChartTab !== null).toString()}>
                   <Link to={`/${coinId}/line-chart`}>
                     <MdStackedLineChart />
                   </Link>
                 </Tab>
-                <Tab isactive={onStickChartTab !== null}>
+                <Tab isactive={(onStickChartTab !== null).toString()}>
                   <Link to={`/${coinId}/stick-chart`}>
                     <MdCandlestickChart />
                   </Link>
                 </Tab>
-                <Tab isactive={onPriceTab !== null}>
+                <Tab isactive={(onPriceTab !== null).toString()}>
                   <Link to={`/${coinId}/price`}>
                     <FaCoins />
                   </Link>

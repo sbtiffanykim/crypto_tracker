@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
-import { RiCoinsFill } from 'react-icons/ri';
 import CoinCard, { ICoin } from '../components/CoinCard';
 import { fetchCoins } from '../api';
 
 const Title = styled.h1`
   color: ${(props) => props.theme.accentColor};
+  font-weight: 700;
+  font-size: 35px;
 `;
 
 const Container = styled.div`
@@ -22,13 +23,15 @@ const Header = styled.header`
 
 const ListTitle = styled.div`
   font-weight: 600;
-  padding: 20px;
+  padding: 20px 0px;
+  font-size: 18px;
 `;
 
 const List = styled.ul`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
+  padding: 0px 5px;
 `;
 
 export default function CoinList() {
@@ -48,7 +51,7 @@ export default function CoinList() {
             <link rel='icon' type='image/svg+xml' href='/coins-money.svg' sizes='16x16' />
           </Helmet>
           <Header>
-            <Title>Coin List</Title>
+            <Title>Crypto Tracker</Title>
           </Header>
           <ListTitle>Market Trend</ListTitle>
           <List>

@@ -1,8 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import ApexChart from 'react-apexcharts';
 import { useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import { fetchCoinHistory } from '../api';
 import { IPriceData, IPriceInfo } from '../types';
+import { isDarkAtom } from '../atoms';
 
 export default function CandleStickChart() {
   const { coinId } = useParams();
@@ -18,6 +20,8 @@ export default function CandleStickChart() {
       }))
     : [];
 
+  const isDark = useRecoilValue(isDarkAtom);
+
   return (
     <>
       {isLoading ? (
@@ -32,7 +36,7 @@ export default function CandleStickChart() {
           ]}
           options={{
             theme: {
-              mode: 'dark',
+              mode: isDark ? 'dark' : 'light',
             },
             chart: {
               height: 300,

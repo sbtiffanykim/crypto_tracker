@@ -1,8 +1,11 @@
 import { Outlet } from 'react-router-dom';
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import reset from 'styled-reset';
-import { MdDarkMode } from 'react-icons/md';
+import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import { HelmetProvider } from 'react-helmet-async';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { darkTheme, lightTheme } from './theme';
+import { isDarkAtom } from './atoms';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -28,10 +31,10 @@ const Container = styled.div`
 const ThemeButton = styled.button`
   position: absolute;
   top: 20px;
-  right: 20px;
+  right: 30px;
   z-index: 1000;
-  background-color: ${(props) => props.theme.accentColor};
-  color: ${(props) => props.theme.textColor};
+  background-color: ${(props) => props.theme.buttonBgColor};
+  color: ${(props) => props.theme.buttonColor};
   height: 40px;
   width: 40px;
   border: none;
@@ -44,25 +47,29 @@ const ThemeButton = styled.button`
   font-size: 20px;
 
   &:hover {
-    opacity: 0.8;
+    background-color: ${(props) => props.theme.buttonHoverBgColor};
     transition: background-color 0.3s ease;
   }
 `;
 
-const theme = {};
-
 function App() {
+  const isDark = useRecoilValue(isDarkAtom);
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  const toggleThemeBtn = () => setDarkAtom((prev) => !prev);
+
   return (
     <>
-      <GlobalStyle />
-      <Container>
-        <ThemeButton>
-          <MdDarkMode />
-        </ThemeButton>
-        <HelmetProvider>
-          <Outlet />
-        </HelmetProvider>
-      </Container>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <GlobalStyle />
+        <Container>
+          <ThemeButton onClick={toggleThemeBtn}>
+            {isDark ? <MdLightMode /> : <MdDarkMode />}
+          </ThemeButton>
+          <HelmetProvider>
+            <Outlet />
+          </HelmetProvider>
+        </Container>
+      </ThemeProvider>
     </>
   );
 }
