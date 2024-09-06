@@ -7,7 +7,7 @@ import { MdDarkMode } from 'react-icons/md';
 const GlobalStyle = createGlobalStyle`
   ${reset}
   body {
-    font-family: "Montserrat", sans-serif;
+    font-family: "Poppins", sans-serif;
     background-color: ${(props) => props.theme.bgColor};
     color: ${(props) => props.theme.textColor};
   }
@@ -20,28 +20,36 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const Layout = styled.div`
-  display: grid;
-  grid-template-columns: 15vw 1fr;
-`;
-
-const Aside = styled.aside`
-  width: 15vw;
-  min-height: 100vh;
-  background-color: ${(props) => props.theme.asideColor};
-  margin-right: 15px;
-`;
-
 const Container = styled.div`
   padding: 10px 20px;
   background-color: ${(props) => props.theme.bgColor};
 `;
 
-const ThemeButton = styled.button``;
+const ThemeButton = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background-color: ${(props) => props.theme.accentColor};
+  color: ${(props) => props.theme.textColor};
+  height: 40px;
+  width: 40px;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
 
-const theme = {
-  spacing: (value: number) => `${value}px`,
-};
+  &:hover {
+    opacity: 0.8;
+    transition: background-color 0.3s ease;
+  }
+`;
+
+const theme = {};
 
 function App() {
   return (
@@ -50,16 +58,12 @@ function App() {
         <title>Crypto Tracker</title>
       </Helmet>
       <GlobalStyle />
-      <Layout>
-        <Aside>
-          <ThemeButton>
-            <MdDarkMode />
-          </ThemeButton>
-        </Aside>
-        <Container>
-          <Outlet />
-        </Container>
-      </Layout>
+      <Container>
+        <ThemeButton>
+          <MdDarkMode />
+        </ThemeButton>
+        <Outlet />
+      </Container>
     </>
   );
 }
