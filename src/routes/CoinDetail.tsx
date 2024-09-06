@@ -231,7 +231,7 @@ export default function CoinDetail() {
 
   return (
     <>
-      {isLoading && !data ? (
+      {isLoading || !data ? (
         <LoaderContainer>
           <Loader />
         </LoaderContainer>

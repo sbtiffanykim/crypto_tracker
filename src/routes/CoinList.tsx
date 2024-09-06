@@ -51,7 +51,7 @@ export default function CoinList() {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading || !data ? (
         <LoaderContainer>
           <Loader />
         </LoaderContainer>

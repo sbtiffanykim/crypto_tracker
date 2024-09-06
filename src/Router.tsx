@@ -6,7 +6,7 @@ import Price from './routes/Price';
 import LineChart from './routes/LineChart';
 import CandleStickChart from './routes/CandleStickChart';
 
-const router = createBrowserRouter([
+const routes = [
   {
     path: '/',
     element: <App />,
@@ -26,6 +26,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-]);
+];
 
-export default router;
+export const router = createBrowserRouter(routes, { basename: '/crypto-tracker' });
