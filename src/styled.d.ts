@@ -10,5 +10,6 @@ declare module 'styled-components' {
     asideColor: string;
     priceUpColor: string;
     priceDownColor: string;
+    borderColor: string;
   }
 }

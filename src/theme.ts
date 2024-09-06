@@ -9,6 +9,7 @@ export const theme: DefaultTheme = {
   asideColor: '#20283a',
   priceUpColor: '#4CAF50',
   priceDownColor: '#E74C3C',
+  borderColor: '#3A4A5F',
 };
 
 export const lightMode: DefaultTheme = {
@@ -20,4 +21,5 @@ export const lightMode: DefaultTheme = {
   asideColor: '#EBF2FF',
   priceUpColor: '#27AE60',
   priceDownColor: '#C0392B',
+  borderColor: '#BDC3C7',
 };
